@@ -1,4 +1,4 @@
-package knu.uot.did_career_certification;
+package did_career_certification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
