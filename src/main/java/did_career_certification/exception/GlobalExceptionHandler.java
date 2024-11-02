@@ -20,4 +20,11 @@ public class GlobalExceptionHandler {
             Locale.getDefault());
         return new ResponseEntity<>(responseMessage, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
+    }
 }
