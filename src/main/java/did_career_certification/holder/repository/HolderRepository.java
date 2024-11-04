@@ -1,6 +1,6 @@
-package did_career_certification.repository;
+package did_career_certification.holder.repository;
 
-import did_career_certification.entity.Holder;
+import did_career_certification.holder.entity.Holder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,9 @@
-package did_career_certification.controller;
+package did_career_certification.holder.controller;
 
-import did_career_certification.dto.LoginRequest;
-import did_career_certification.dto.RegisterRequest;
-import did_career_certification.dto.TokenResponse;
-import did_career_certification.service.HolderService;
+import did_career_certification.holder.dto.LoginRequest;
+import did_career_certification.holder.dto.RegisterRequest;
+import did_career_certification.holder.dto.TokenResponse;
+import did_career_certification.holder.service.HolderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

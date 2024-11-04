@@ -1,13 +1,13 @@
-package did_career_certification.service;
+package did_career_certification.holder.service;
 
-import did_career_certification.dto.LoginRequest;
-import did_career_certification.dto.RegisterRequest;
-import did_career_certification.dto.TokenResponse;
-import did_career_certification.entity.Holder;
+import did_career_certification.holder.dto.LoginRequest;
+import did_career_certification.holder.dto.RegisterRequest;
+import did_career_certification.holder.dto.TokenResponse;
+import did_career_certification.holder.entity.Holder;
 import did_career_certification.exception.DuplicateException;
 import did_career_certification.exception.NotFoundException;
 import did_career_certification.exception.PermissionException;
-import did_career_certification.repository.HolderRepository;
+import did_career_certification.holder.repository.HolderRepository;
 import did_career_certification.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
