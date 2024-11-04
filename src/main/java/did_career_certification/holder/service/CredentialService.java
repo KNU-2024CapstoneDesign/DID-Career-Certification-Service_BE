@@ -5,14 +5,15 @@ import did_career_certification.exception.ResponseException;
 import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
 import did_career_certification.holder.entity.Holder;
+import did_career_certification.holder.entity.VC;
 import did_career_certification.holder.repository.UnivRepository;
+import did_career_certification.holder.repository.VCRepository;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.http.HttpStatusCode;
 
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatusCode;
 public class CredentialService {
 
     private final HolderService holderService;
+    private final VCRepository vcRepository;
 
     private final RestClient client = RestClient.builder()
         .defaultStatusHandler(HttpStatusCode::is4xxClientError, (request, response) -> {
@@ -42,6 +44,9 @@ public class CredentialService {
             .body(body)
             .retrieve()
             .body(Map.class);
+        if(response == null)
+            throw new ResponseException("not.receive.response");
+        vcRepository.save(new VC(holder, response.get("vcToken").toString()));
     }
 
     private Map<String, Object> createBody(CredentialRequest request, String holderName) {
