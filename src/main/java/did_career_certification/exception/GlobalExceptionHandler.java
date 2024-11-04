@@ -5,14 +5,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
     private MessageSource messageSource;
+
+    public GlobalExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(DuplicateException.class)
     public ResponseEntity<String> handleDuplicateException(DuplicateException e) {
@@ -54,5 +58,17 @@ public class GlobalExceptionHandler {
         String responseMessage = messageSource.getMessage(e.getMessage(), null,
             Locale.getDefault());
         return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException e) {
+        StringBuilder errors = new StringBuilder();
+        e.getBindingResult().getFieldErrors().forEach(error ->
+            errors.append(error.getField())
+                .append(":\t")
+                .append(error.getDefaultMessage())
+                .append("\n")
+        );
+        return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -3,8 +3,11 @@ package did_career_certification.holder.service;
 import did_career_certification.exception.RequestException;
 import did_career_certification.exception.ResponseException;
 import did_career_certification.holder.dto.CredentialRequest;
+import did_career_certification.holder.dto.IssuerResponse;
 import did_career_certification.holder.entity.Holder;
+import did_career_certification.holder.repository.UnivRepository;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -27,6 +30,7 @@ public class CredentialService {
             throw new ResponseException("not.receive.response");
         })
         .build();
+    private final UnivRepository univRepository;
 
     public void requestIssueCredential(String walletAddress, CredentialRequest request) {
         var url = "http://localhost:8080/api/issuer/vc";
@@ -40,12 +44,15 @@ public class CredentialService {
             .body(Map.class);
     }
 
-    private LinkedMultiValueMap<String, Object> createBody(CredentialRequest request,
-        String holderName) {
-        var body = new LinkedMultiValueMap<String, Object>();
-        body.add("holderDid", request.did());
-        body.add("name", holderName);
-        body.add("stdId", request.stdId());
+    private Map<String, Object> createBody(CredentialRequest request, String holderName) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("holderDid", request.holderDid());
+        body.put("name", holderName);
+        body.put("stdId", request.stdId());
         return body;
+    }
+
+    public IssuerResponse findAllIssuer() {
+        return new IssuerResponse(univRepository.findAll());
     }
 }

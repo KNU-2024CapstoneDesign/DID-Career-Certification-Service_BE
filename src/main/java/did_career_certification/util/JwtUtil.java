@@ -1,6 +1,7 @@
 package did_career_certification.util;
 
 import did_career_certification.exception.InvalidTokenException;
+import did_career_certification.issuer.dto.VC;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -67,5 +68,19 @@ public class JwtUtil {
 
     private boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
+    }
+
+    public String generateVCToken(VC vc) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expirationTime);
+
+        return Jwts.builder()
+            .setSubject(vc.holderDid())
+            .setIssuer(vc.issuerDid())
+            .setIssuedAt(now)
+            .setExpiration(expiryDate)
+            .claim("claims", vc.subject())
+            .signWith(secretKey, SignatureAlgorithm.HS256)
+            .compact();
     }
 }

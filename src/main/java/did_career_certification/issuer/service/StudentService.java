@@ -1,5 +1,6 @@
 package did_career_certification.issuer.service;
 
+import did_career_certification.exception.NotFoundException;
 import did_career_certification.issuer.entity.Student;
 import did_career_certification.issuer.repository.StudentRepository;
 import java.util.List;
@@ -15,5 +16,10 @@ public class StudentService {
 
     public List<Student> findAll(Pageable pageable) {
         return studentRepository.findAll(pageable).stream().toList();
+    }
+
+    public Student findById(Long id) {
+        return studentRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("not.found.user"));
     }
 }
