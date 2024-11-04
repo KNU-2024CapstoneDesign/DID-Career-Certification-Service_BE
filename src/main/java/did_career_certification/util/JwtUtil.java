@@ -1,8 +1,12 @@
 package did_career_certification.util;
 
+import did_career_certification.exception.InvalidTokenException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,4 +40,32 @@ public class JwtUtil {
             .compact();
     }
 
+    public String parseToken(String token) {
+        try {
+            Claims claims = extractAllClaims(token);
+            if (isTokenExpired(claims.getExpiration())) {
+                throw new InvalidTokenException("token.expired");
+            }
+            String walletAddress = claims.get(ID).toString();
+            return walletAddress;
+        } catch (ExpiredJwtException e) {
+            throw new InvalidTokenException("token.expired");
+        } catch (SignatureException e) {
+            throw new InvalidTokenException("token.signature.invalid");
+        } catch (Exception e) {
+            throw new InvalidTokenException("invalid.token");
+        }
+    }
+
+    private Claims extractAllClaims(String token) throws ExpiredJwtException, SignatureException {
+        return Jwts.parser()
+            .setSigningKey(secretKey)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+    }
+
+    private boolean isTokenExpired(Date expiration) {
+        return expiration.before(new Date());
+    }
 }

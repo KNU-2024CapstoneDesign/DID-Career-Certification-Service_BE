@@ -42,4 +42,9 @@ public class HolderService {
             throw new DuplicateException("already.exist.walletaddress");
         }
     }
+
+    public Holder findByWalletAddress(String walletAddress) {
+        return holderRepository.findById(walletAddress)
+            .orElseThrow(() -> new NotFoundException("not.found.user"));
+    }
 }

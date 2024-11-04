@@ -27,4 +27,32 @@ public class GlobalExceptionHandler {
             Locale.getDefault());
         return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(PermissionException.class)
+    public ResponseEntity<String> handlePermissionException(PermissionException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> handleInvalidTokenException(InvalidTokenException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ResponseException.class)
+    public ResponseEntity<String> handleResponseException(ResponseException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_GATEWAY);
+    }
+
+    @ExceptionHandler(RequestException.class)
+    public ResponseEntity<String> handleBadRequestException(RequestException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+    }
 }

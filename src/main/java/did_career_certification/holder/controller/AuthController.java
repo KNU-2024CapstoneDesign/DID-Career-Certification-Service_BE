@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,8 +21,7 @@ public class AuthController {
     private final HolderService holderService;
 
     @PostMapping("/holder/register")
-    public ResponseEntity<Void> registerHolder(
-        @RequestPart(value = "holder") @Valid RegisterRequest request) {
+    public ResponseEntity<Void> registerHolder(@Valid @RequestBody RegisterRequest request) {
         holderService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
