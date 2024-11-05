@@ -73,7 +73,6 @@ public class CredentialService {
         List<MyVCResponse> response = new ArrayList<>();
         for(VC vc: vcList) {
             Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
-            System.out.println("issuerDID: " + decodeVCToken.get("issuerDid").toString());
             String issuerName = univRepository.findByDid(decodeVCToken.get("issuerDid").toString())
                 .orElseThrow(() -> new NotFoundException("not.found.univ")).getName();
             response.add(new MyVCResponse(vc.getId(), issuerName, decodeVCToken));

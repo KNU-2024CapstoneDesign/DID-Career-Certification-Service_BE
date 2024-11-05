@@ -1,13 +1,7 @@
 package did_career_certification.util;
 
 import did_career_certification.exception.InvalidTokenException;
-import did_career_certification.holder.dto.MyVCResponse;
-import did_career_certification.issuer.dto.CredentialSubject;
 import did_career_certification.issuer.dto.VC;
-import did_career_certification.issuer.enums.AcademicStatus;
-import did_career_certification.issuer.enums.College;
-import did_career_certification.issuer.enums.Degree;
-import did_career_certification.issuer.enums.Major;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
