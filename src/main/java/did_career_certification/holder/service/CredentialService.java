@@ -6,10 +6,14 @@ import did_career_certification.exception.ResponseException;
 import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
 import did_career_certification.holder.dto.MyVCResponse;
+import did_career_certification.holder.dto.VPRequest;
+import did_career_certification.holder.dto.VerifierResponse;
 import did_career_certification.holder.entity.Holder;
 import did_career_certification.holder.entity.VC;
+import did_career_certification.holder.entity.Verifier;
 import did_career_certification.holder.repository.UnivRepository;
 import did_career_certification.holder.repository.VCRepository;
+import did_career_certification.holder.repository.VerifierRepository;
 import did_career_certification.util.JwtUtil;
 import java.net.URI;
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ public class CredentialService {
         .build();
     private final UnivRepository univRepository;
     private final JwtUtil jwtUtil;
+    private final VerifierRepository verifierRepository;
 
     public void requestIssueCredential(String walletAddress, CredentialRequest request) {
         var url = "http://localhost:8080/api/issuer/vc";
@@ -78,5 +83,41 @@ public class CredentialService {
             response.add(new MyVCResponse(vc.getId(), issuerName, decodeVCToken));
         }
         return response;
+    }
+
+    public void submitVP(String walletAddress, VPRequest request) {
+        Verifier verifier = verifierRepository.findById(request.verifierId())
+            .orElseThrow(() -> new NotFoundException("not.found.verifier"));
+        Holder holder = holderService.findByWalletAddress(walletAddress);
+        List<Map<String, Object>> vcList = new ArrayList<>();
+        for(Long vcId: request.vcIds()) {
+             vcList.add(jwtUtil.decodeVCToken(vcRepository.findById(vcId).orElseThrow()
+                .getVcToken()));
+        }
+        var url = "http://localhost:8080/api/verifier/vp";
+        final var body = createVP(holder.getWalletAddress(), vcList);
+        client.post()
+            .uri(URI.create(url))
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(body)
+            .retrieve()
+            .body(Map.class);
+    }
+
+    private Map<String, Object> createVP(String holderDid, List<Map<String, Object>> vcList) {
+        Map<String, Object> proof = new HashMap<>();
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
+        payload.put("type", new String[]{"VerifiablePresentation"});
+        payload.put("holder", holderDid);
+        payload.put("verifiableCredential", vcList);
+        payload.put("proof", proof);
+        return payload;
+    }
+
+    public List<VerifierResponse> findAllVerifier() {
+        return verifierRepository.findAll().stream()
+            .map(Verifier::toDto)
+            .toList();
     }
 }
