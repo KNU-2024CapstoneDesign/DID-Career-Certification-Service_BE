@@ -5,6 +5,7 @@ import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
 import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.holder.service.CredentialService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class CredentialController {
     }
 
     @GetMapping
-    public ResponseEntity<MyVCResponse> getMyVc(@Login String walletAddress) {
+    public ResponseEntity<List<MyVCResponse>> getMyVc(@Login String walletAddress) {
         return ResponseEntity.status(HttpStatus.OK)
             .body(credentialService.getMyVc(walletAddress));
     }

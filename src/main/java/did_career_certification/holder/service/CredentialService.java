@@ -12,7 +12,9 @@ import did_career_certification.holder.repository.UnivRepository;
 import did_career_certification.holder.repository.VCRepository;
 import did_career_certification.util.JwtUtil;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -65,12 +67,17 @@ public class CredentialService {
         return new IssuerResponse(univRepository.findAll());
     }
 
-    public MyVCResponse getMyVc(String walletAddress) {
+    public List<MyVCResponse> getMyVc(String walletAddress) {
         Holder holder = holderService.findByWalletAddress(walletAddress);
-        VC vc = vcRepository.findByHolder(holder)
-            .orElseThrow(() -> new NotFoundException("not.found.vc"));
-        Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
-        String issuerName = "강원대학교(춘천)";
-        return new MyVCResponse(issuerName, decodeVCToken);
+        List<VC> vcList = vcRepository.findAllByHolder(holder);
+        List<MyVCResponse> response = new ArrayList<>();
+        for(VC vc: vcList) {
+            Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
+            System.out.println("issuerDID: " + decodeVCToken.get("issuerDid").toString());
+            String issuerName = univRepository.findByDid(decodeVCToken.get("issuerDid").toString())
+                .orElseThrow(() -> new NotFoundException("not.found.univ")).getName();
+            response.add(new MyVCResponse(vc.getId(), issuerName, decodeVCToken));
+        }
+        return response;
     }
 }
