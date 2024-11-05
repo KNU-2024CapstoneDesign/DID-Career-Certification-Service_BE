@@ -1,6 +1,7 @@
 package did_career_certification.util;
 
 import did_career_certification.exception.InvalidTokenException;
+import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.issuer.dto.CredentialSubject;
 import did_career_certification.issuer.dto.VC;
 import did_career_certification.issuer.enums.AcademicStatus;
@@ -102,7 +103,7 @@ public class JwtUtil {
             .compact();                              // JWT 생성
     }
 
-    public VC decodeVCToken(String vcToken) {
+    public Map<String, Object> decodeVCToken(String vcToken) {
         try {
             // JWT 토큰을 파싱하고 서명 검증
             Jws<Claims> claimsJws = Jwts.parser()
@@ -112,18 +113,13 @@ public class JwtUtil {
             Claims claims = claimsJws.getBody();
 
             // 클레임 데이터 추출
-            String issuerDid = claims.get("issuer", String.class);
-            Map<String, Object> credentialSubject = claims.get("credentialSubject", Map.class);
+            Map<String, Object> vcSubject = new HashMap<>();
+            vcSubject.put("issuerDid", claims.get("issuer", String.class));
+            vcSubject.put("issued", claims.get("issued", Date.class));
+            vcSubject.put("credentialSubject", claims.get("credentialSubject", Map.class));
 
-            String holderDid = (String) credentialSubject.get("id");
-            String name = (String) credentialSubject.get("name");
-            College college = (College) credentialSubject.get("college");
-            Major major = (Major) credentialSubject.get("major");
-            Degree degree = (Degree) credentialSubject.get("degree");
-            AcademicStatus academicStatus = (AcademicStatus) credentialSubject.get("academicStatus");
-
-            // VC 객체 생성 및 반환
-            return new VC(issuerDid, holderDid, new CredentialSubject(name, college, major, degree, academicStatus));
+            // Return the result map
+            return vcSubject;
 
         } catch (SignatureException e) {
             // 서명 검증에 실패한 경우 예외 처리

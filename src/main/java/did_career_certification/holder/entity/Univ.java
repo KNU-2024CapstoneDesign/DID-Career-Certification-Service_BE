@@ -20,4 +20,7 @@ public class Univ {
 
     @Column(nullable = false)
     private String requestApi;
+
+    @Column(nullable = false)
+    private String did;
 }

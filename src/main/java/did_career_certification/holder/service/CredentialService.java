@@ -1,9 +1,11 @@
 package did_career_certification.holder.service;
 
+import did_career_certification.exception.NotFoundException;
 import did_career_certification.exception.RequestException;
 import did_career_certification.exception.ResponseException;
 import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
+import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.holder.entity.Holder;
 import did_career_certification.holder.entity.VC;
 import did_career_certification.holder.repository.UnivRepository;
@@ -61,5 +63,14 @@ public class CredentialService {
 
     public IssuerResponse findAllIssuer() {
         return new IssuerResponse(univRepository.findAll());
+    }
+
+    public MyVCResponse getMyVc(String walletAddress) {
+        Holder holder = holderService.findByWalletAddress(walletAddress);
+        VC vc = vcRepository.findByHolder(holder)
+            .orElseThrow(() -> new NotFoundException("not.found.vc"));
+        Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
+        String issuerName = "강원대학교(춘천)";
+        return new MyVCResponse(issuerName, decodeVCToken);
     }
 }

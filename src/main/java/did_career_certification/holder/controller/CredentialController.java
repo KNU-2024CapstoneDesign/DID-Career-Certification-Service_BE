@@ -3,6 +3,7 @@ package did_career_certification.holder.controller;
 import did_career_certification.holder.annotation.Login;
 import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
+import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.holder.service.CredentialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,11 @@ public class CredentialController {
         @RequestBody CredentialRequest request) {
         credentialService.requestIssueCredential(walletAddress, request);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<MyVCResponse> getMyVc(@Login String walletAddress) {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(credentialService.getMyVc(walletAddress));
     }
 }
