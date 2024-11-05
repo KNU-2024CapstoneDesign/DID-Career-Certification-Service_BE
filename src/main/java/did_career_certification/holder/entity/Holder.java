@@ -21,8 +21,6 @@ public class Holder {
     @Column(nullable = false)
     private String name;
 
-    private String vpToken;
-
     public Holder (String walletAddress, String password, String name) {
         this.walletAddress = walletAddress;
         this.password = password;

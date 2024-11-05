@@ -1,14 +1,22 @@
 package did_career_certification.util;
 
 import did_career_certification.exception.InvalidTokenException;
+import did_career_certification.issuer.dto.CredentialSubject;
 import did_career_certification.issuer.dto.VC;
+import did_career_certification.issuer.enums.AcademicStatus;
+import did_career_certification.issuer.enums.College;
+import did_career_certification.issuer.enums.Degree;
+import did_career_certification.issuer.enums.Major;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -71,17 +79,58 @@ public class JwtUtil {
     }
 
     public String generateVCToken(VC vc) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expirationTime);
+        // VC의 클레임 데이터 생성
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
+        claims.put("issuer", vc.issuerDid());
+        claims.put("issued", new Date());
+        claims.put("credentialSubject", Map.of(
+            "id", vc.holderDid(),
+            "name", vc.subject().name(),
+            "college", vc.subject().college().name(),
+            "major", vc.subject().major().name(),
+            "degree", vc.subject().degree().name(),
+            "academicStatus", vc.subject().academicStatus()
+        ));
 
+        // JWT 생성 및 서명
         return Jwts.builder()
-            .setSubject(vc.holderDid())
-            .setIssuer(vc.issuerDid())
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
-            .claim("claims", vc.subject())
-            .signWith(secretKey, SignatureAlgorithm.HS256)
-            .compact();
+            .setClaims(claims)                       // 클레임 데이터 설정
+            .setIssuer(vc.issuerDid())      // Issuer DID 설정
+            .setIssuedAt(new Date())                 // 발급 일자
+            .signWith(SignatureAlgorithm.HS256, secretKey) // HMAC 서명
+            .compact();                              // JWT 생성
+    }
+
+    public VC decodeVCToken(String vcToken) {
+        try {
+            // JWT 토큰을 파싱하고 서명 검증
+            Jws<Claims> claimsJws = Jwts.parser()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(vcToken);
+            Claims claims = claimsJws.getBody();
+
+            // 클레임 데이터 추출
+            String issuerDid = claims.get("issuer", String.class);
+            Map<String, Object> credentialSubject = claims.get("credentialSubject", Map.class);
+
+            String holderDid = (String) credentialSubject.get("id");
+            String name = (String) credentialSubject.get("name");
+            College college = (College) credentialSubject.get("college");
+            Major major = (Major) credentialSubject.get("major");
+            Degree degree = (Degree) credentialSubject.get("degree");
+            AcademicStatus academicStatus = (AcademicStatus) credentialSubject.get("academicStatus");
+
+            // VC 객체 생성 및 반환
+            return new VC(issuerDid, holderDid, new CredentialSubject(name, college, major, degree, academicStatus));
+
+        } catch (SignatureException e) {
+            // 서명 검증에 실패한 경우 예외 처리
+            throw new IllegalArgumentException("Invalid JWT signature");
+        } catch (Exception e) {
+            // 기타 예외 처리
+            throw new IllegalArgumentException("Error decoding JWT token", e);
+        }
     }
 }
-// @context 설정

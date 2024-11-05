@@ -8,6 +8,7 @@ import did_career_certification.holder.entity.Holder;
 import did_career_certification.holder.entity.VC;
 import did_career_certification.holder.repository.UnivRepository;
 import did_career_certification.holder.repository.VCRepository;
+import did_career_certification.util.JwtUtil;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class CredentialService {
         })
         .build();
     private final UnivRepository univRepository;
+    private final JwtUtil jwtUtil;
 
     public void requestIssueCredential(String walletAddress, CredentialRequest request) {
         var url = "http://localhost:8080/api/issuer/vc";
