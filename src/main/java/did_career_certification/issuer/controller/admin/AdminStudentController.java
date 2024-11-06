@@ -28,7 +28,7 @@ public class AdminStudentController {
     @GetMapping
     public String getStudentList(Model model, Pageable pageable) {
         model.addAttribute("studentList", studentService.findAll(pageable));
-        return "student-management-page";
+        return "issuer/student-management-page";
     }
 
     @GetMapping("/register")
@@ -38,7 +38,7 @@ public class AdminStudentController {
         model.addAttribute("majors", Major.values());
         model.addAttribute("degrees", Degree.values());
         model.addAttribute("academicStatus", AcademicStatus.values());
-        return "student-register-form";
+        return "issuer/student-register-form";
     }
 
     @PostMapping
@@ -46,7 +46,7 @@ public class AdminStudentController {
         Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "student-register-form";
+            return "issuer/student-register-form";
         }
         studentService.registerStudent(request);
         return "redirect:/admin/issuer/students";
