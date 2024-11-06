@@ -19,6 +19,15 @@
       <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error Message</td>
     </tr>
     <tr>
+      <td>학번: </td>
+      <td>
+        <label>
+          <input type="number" name="id" value="" required />
+        </label>
+      </td>
+      <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Student ID Error Message</td>
+    </tr>
+    <tr>
       <td>단과 대학: </td>
       <td>
         <label>
