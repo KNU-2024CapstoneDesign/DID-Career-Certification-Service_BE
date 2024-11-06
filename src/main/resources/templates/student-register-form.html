@@ -5,15 +5,15 @@
   <title>학생 등록 페이지</title>
 </head>
 <body>
-<a href="/admin/issuers/students"><- 학생 관리 페이지로 돌아가기</a>
+<a href="/admin/issuer/students"><- 학생 관리 페이지로 돌아가기</a>
 <h2>학생 신규 등록</h2>
-<form th:action="@{/admin/issuers}" th:object="${student}" method="post">
+<form th:action="@{/admin/issuer/students}" th:object="${student}" method="post">
   <table>
     <tr>
       <td>학생 이름: </td>
       <td>
         <label>
-          <input type="text" name="name" value="" required />
+          <input type="text" name="Name" th:field="*{name}" value="" required />
       </label>
       </td>
       <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error Message</td>
@@ -22,7 +22,7 @@
       <td>학번: </td>
       <td>
         <label>
-          <input type="number" name="id" value="" required />
+          <input type="number" name="Id" th:field="*{id}" value="" required />
         </label>
       </td>
       <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Student ID Error Message</td>
@@ -31,7 +31,7 @@
       <td>단과 대학: </td>
       <td>
         <label>
-          <select name="College" required>
+          <select name="College" th:field="*{college}" required>
             <option value="" disabled selected>소속 단과대를 선택하세요</option>
             <option th:each="college : ${colleges}" th:value="${college}" th:text="${college}"></option>
           </select>
@@ -43,7 +43,7 @@
       <td>전공: </td>
       <td>
         <label>
-          <select name="Major" required>
+          <select name="Major" th:field="*{major}" required>
             <option value="" disabled selected>세부 전공을 선택하세요</option>
             <option th:each="major : ${majors}" th:value="${major}" th:text="${major}"></option>
           </select>
@@ -55,7 +55,7 @@
       <td>학위: </td>
       <td>
         <label>
-          <select name="Degree" required>
+          <select name="Degree" th:field="*{degree}" required>
             <option value="" disabled selected>소속 단과대를 선택하세요</option>
             <option th:each="degree : ${degrees}" th:value="${degree}" th:text="${degree}"></option>
           </select>
@@ -67,8 +67,8 @@
       <td>상태: </td>
       <td>
         <label>
-          <select name="Status" required>
-            <option value="" disabled selected>소속 단과대를 선택하세요</option>
+          <select name="Status" th:field="*{academicStatus}" required>
+            <option value="" disabled selected>상태를 선택하세요</option>
             <option th:each="status : ${academicStatus}" th:value="${status}" th:text="${status}"></option>
           </select>
         </label>
