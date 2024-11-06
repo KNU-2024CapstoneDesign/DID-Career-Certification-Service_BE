@@ -10,6 +10,6 @@ public record RegisterStudentRequest(String name, College college, Major major, 
                                      AcademicStatus academicStatus) {
 
     public Student toEntity() {
-        this(name, college, major, degree, academicStatus);
+        return new Student(name, college, major, degree, academicStatus);
     }
 }
