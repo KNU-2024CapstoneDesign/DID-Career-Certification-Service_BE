@@ -45,14 +45,15 @@ h2 {
 .table {
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-top: 20px;
 }
 
 .table td {
+  vertical-align: middle;
   padding: 15px;
 }
 
 .table th {
+  vertical-align: middle;
   padding: 12px;
   background-color: #f1f3f5;
   font-weight: bold;
@@ -106,4 +107,13 @@ button[type="submit"] {
   font-weight: bold;
   padding: 12px;
   margin-top: 20px;
+}
+
+.btn-update {
+  font-size: 0.8rem;
+  padding: 6px;
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100%; /* 버튼이 셀을 채우도록 설정 */
 }

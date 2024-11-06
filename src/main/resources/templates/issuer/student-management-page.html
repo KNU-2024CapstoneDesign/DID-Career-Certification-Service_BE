@@ -26,6 +26,7 @@
       <th>Major</th>
       <th>Degree</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody th:each="student : ${studentList}">
@@ -47,6 +48,11 @@
       </td>
       <td>
         <span th:text="${student.academicStatus}"></span>
+      </td>
+      <td>
+        <form th:action="@{/admin/issuer/students/{id}/update(id=${student.id})}" method="get">
+          <button type="submit" class="btn btn-primary btn-update">수정</button>
+        </form>
       </td>
     </tr>
     </tbody>
