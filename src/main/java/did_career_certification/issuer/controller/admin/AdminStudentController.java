@@ -1,6 +1,7 @@
 package did_career_certification.issuer.controller.admin;
 
 import did_career_certification.issuer.dto.RegisterStudentRequest;
+import did_career_certification.issuer.dto.UpdateStudentRequest;
 import did_career_certification.issuer.entity.Student;
 import did_career_certification.issuer.enums.AcademicStatus;
 import did_career_certification.issuer.enums.College;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -43,8 +45,8 @@ public class AdminStudentController {
     }
 
     @PostMapping
-    public String registerStudent(@Valid @ModelAttribute RegisterStudentRequest request, BindingResult bindingResult,
-        Model model) {
+    public String registerStudent(@Valid @ModelAttribute RegisterStudentRequest request,
+        BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "issuer/student-register-form";
@@ -62,5 +64,17 @@ public class AdminStudentController {
         model.addAttribute("degrees", Degree.values());
         model.addAttribute("academicStatus", AcademicStatus.values());
         return "issuer/student-update-form";
+    }
+
+    @PutMapping("/{id}")
+    public String updateStudent(@PathVariable Long id,
+        @Valid @ModelAttribute UpdateStudentRequest request, BindingResult bindingResult,
+        Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "issuer/student-update-form";
+        }
+        studentService.updateStudent(id, request);
+        return "redirect:/admin/issuer/students";
     }
 }

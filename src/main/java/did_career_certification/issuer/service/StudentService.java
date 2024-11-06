@@ -2,6 +2,7 @@ package did_career_certification.issuer.service;
 
 import did_career_certification.exception.NotFoundException;
 import did_career_certification.issuer.dto.RegisterStudentRequest;
+import did_career_certification.issuer.dto.UpdateStudentRequest;
 import did_career_certification.issuer.entity.Student;
 import did_career_certification.issuer.repository.StudentRepository;
 import java.util.List;
@@ -26,6 +27,11 @@ public class StudentService {
 
     public void registerStudent(RegisterStudentRequest request) {
         Student student = request.toEntity();
+        studentRepository.save(student);
+    }
+
+    public void updateStudent(Long id, UpdateStudentRequest request) {
+        Student student = request.toEntity(id);
         studentRepository.save(student);
     }
 }

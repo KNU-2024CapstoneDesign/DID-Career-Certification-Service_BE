@@ -12,19 +12,23 @@
   <div class="container">
     <a href="/admin/issuer/students" class="btn btn-link">&larr; 학생 관리 페이지로 돌아가기</a>
   <h2 class="mb-4">학생 정보 변경</h2>
-  <form th:action="@{/admin/issuer/students}" th:object="${student}" method="post" class="needs-validation" novalidate>
+  <form th:action="@{/admin/issuer/students/{id}(id=${student.id})}" th:object="${student}" method="post" class="needs-validation" novalidate>
     <input type="hidden" name="_method" value="put" />
     <table class="table">
       <tr>
         <td>학생 이름:</td>
         <td>
-          <span th:text="${student.name}" />
+          <label>
+            <input type="text" name="name" th:field="*{name}" class="form-control" readonly />
+          </label>
         </td>
       </tr>
       <tr>
         <td>학번:</td>
         <td>
-          <span th:text="${student.id}" />
+          <label>
+            <input type="text" name="id" th:field="*{id}" class="form-control" readonly />
+          </label>
         </td>
       </tr>
       <tr>
