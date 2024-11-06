@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>학생 등록 페이지</title>
+</head>
+<body>
+<a href="/admin/issuers/students"><- 학생 관리 페이지로 돌아가기</a>
+<h2>학생 신규 등록</h2>
+<form th:action="@{/admin/issuers}" th:object="${student}" method="post">
+  <table>
+    <tr>
+      <td>학생 이름: </td>
+      <td>
+        <label>
+          <input type="text" name="name" value="" required />
+      </label>
+      </td>
+      <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error Message</td>
+    </tr>
+    <tr>
+      <td>단과 대학: </td>
+      <td>
+        <label>
+          <select name="College" required>
+            <option value="" disabled selected>소속 단과대를 선택하세요</option>
+            <option th:each="college : ${colleges}" th:value="${college}" th:text="${college}"></option>
+          </select>
+        </label>
+      </td>
+      <td th:if="${#fields.hasErrors('college')}" th:errors="*{college}">College Error Message</td>
+    </tr>
+    <tr>
+      <td>전공: </td>
+      <td>
+        <label>
+          <select name="Major" required>
+            <option value="" disabled selected>세부 전공을 선택하세요</option>
+            <option th:each="major : ${majors}" th:value="${major}" th:text="${major}"></option>
+          </select>
+        </label>
+      </td>
+      <td th:if="${#fields.hasErrors('major')}" th:errors="*{major}">Major Error Message</td>
+    </tr>
+    <tr>
+      <td>학위: </td>
+      <td>
+        <label>
+          <select name="Degree" required>
+            <option value="" disabled selected>소속 단과대를 선택하세요</option>
+            <option th:each="degree : ${degrees}" th:value="${degree}" th:text="${degree}"></option>
+          </select>
+        </label>
+      </td>
+      <td th:if="${#fields.hasErrors('degree')}" th:errors="*{degree}">Degree Error Message</td>
+    </tr>
+    <tr>
+      <td>상태: </td>
+      <td>
+        <label>
+          <select name="Status" required>
+            <option value="" disabled selected>소속 단과대를 선택하세요</option>
+            <option th:each="status : ${academicStatus}" th:value="${status}" th:text="${status}"></option>
+          </select>
+        </label>
+      </td>
+      <td th:if="${#fields.hasErrors('academicStatus')}" th:errors="*{academicStatus}">Status Error Message</td>
+    </tr>
+    <tr>
+      <td><button type="submit">등록</button></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
