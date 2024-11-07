@@ -27,6 +27,9 @@ public class VC {
     // 발급 기관 DID
     private String issuerDid;
 
+    // 발급 기관 지갑에 저장된 문서의 id
+    private String documentId;
+
     // 증명서 종류(졸업, 재학 등..)
     private String type;
 
