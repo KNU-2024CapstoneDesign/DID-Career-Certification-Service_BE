@@ -1,5 +1,6 @@
 package did_career_certification.verifier.entity;
 
+import did_career_certification.verifier.dto.VPResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,5 +41,9 @@ public class VP {
     public VP(String holderDid, String verificationMethod) {
         this.holderDid = holderDid;
         this.verificationMethod = verificationMethod;
+    }
+
+    public VPResponse toDto() {
+        return new VPResponse(id, holderName);
     }
 }

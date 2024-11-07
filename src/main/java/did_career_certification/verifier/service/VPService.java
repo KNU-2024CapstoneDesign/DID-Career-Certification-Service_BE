@@ -22,6 +22,8 @@ public class VPService {
     }
 
     public List<VPResponse> findAllVP() {
-
+        return vpRepository.findAll().stream()
+            .map(VP::toDto)
+            .toList();
     }
 }
