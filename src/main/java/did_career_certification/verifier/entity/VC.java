@@ -8,11 +8,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "VerifierVC")
 @Table(name = "VERIFIER_VC_TB")
 @NoArgsConstructor
+@Getter
 public class VC {
 
     @Id

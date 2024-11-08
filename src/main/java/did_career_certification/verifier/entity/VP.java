@@ -20,10 +20,10 @@ public class VP {
 
     private String holderName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String holderDid;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String documentId;
 
     //Proof
@@ -36,7 +36,7 @@ public class VP {
     // 서명 목적(authentication은 Holder가 자신을 증명)
     private String proofPurpose;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String verificationMethod;
 
     public VP(String holderDid, String verificationMethod) {
