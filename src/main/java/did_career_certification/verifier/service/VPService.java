@@ -6,6 +6,7 @@ import did_career_certification.verifier.entity.VP;
 import did_career_certification.verifier.repository.VCRepository;
 import did_career_certification.verifier.repository.VPRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class VPService {
     }
 
     public List<VPResponse> findAllVP() {
-
+        return vpRepository.findAll().stream()
+            .map(vp -> vp.toDto(vcRepository.findAllByVp(vp)))
+            .collect(Collectors.toList());
     }
 }

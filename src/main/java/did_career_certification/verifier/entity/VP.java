@@ -1,11 +1,13 @@
 package did_career_certification.verifier.entity;
 
+import did_career_certification.verifier.dto.VPResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -40,5 +42,9 @@ public class VP {
     public VP(String holderDid, String verificationMethod) {
         this.holderDid = holderDid;
         this.verificationMethod = verificationMethod;
+    }
+
+    public VPResponse toDto(List<VC> vcList) {
+        return new VPResponse(id, holderName, vcList);
     }
 }
