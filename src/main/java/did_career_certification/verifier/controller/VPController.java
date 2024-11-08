@@ -1,6 +1,5 @@
 package did_career_certification.verifier.controller;
 
-import did_career_certification.verifier.dto.VCValidateRequest;
 import did_career_certification.verifier.dto.VCValidateResponse;
 import did_career_certification.verifier.dto.VPRequest;
 import did_career_certification.verifier.dto.VPResponse;
@@ -37,7 +36,7 @@ public class VPController {
     }
 
     @GetMapping("/vp/{vpId}")
-    public ResponseEntity<List<VCValidateResponse>> validateVP(@PathVariable Long vpId) {
+    public ResponseEntity<VCValidateResponse> validateVP(@PathVariable Long vpId) {
         return ResponseEntity.status(HttpStatus.OK)
             .body(vpService.validateVC(vpId));
     }

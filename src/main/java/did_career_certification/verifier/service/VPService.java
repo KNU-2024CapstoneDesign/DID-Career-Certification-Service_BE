@@ -34,14 +34,14 @@ public class VPService {
             .collect(Collectors.toList());
     }
 
-    public List<VCValidateResponse> validateVC(Long id) {
+    public VCValidateResponse validateVC(Long id) {
         VP vp = vpRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("not.found.vp"));
         List<VC> vcList = vcRepository.findAllByVp(vp);
-        List<VCValidateResponse> response = new ArrayList<>();
+        List<Long> response = new ArrayList<>();
         for(VC vc: vcList) {
-            response.add(new VCValidateResponse(vc.getId()));
+            response.add(vc.getId());
         }
-        return response;
+        return new VCValidateResponse(response);
     }
 }

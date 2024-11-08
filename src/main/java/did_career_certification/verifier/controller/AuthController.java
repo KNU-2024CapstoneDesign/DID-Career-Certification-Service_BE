@@ -1,9 +1,9 @@
-package did_career_certification.holder.controller;
+package did_career_certification.verifier.controller;
 
-import did_career_certification.holder.dto.LoginRequest;
-import did_career_certification.holder.dto.RegisterRequest;
-import did_career_certification.holder.dto.TokenResponse;
-import did_career_certification.holder.service.HolderService;
+import did_career_certification.verifier.dto.LoginRequest;
+import did_career_certification.verifier.dto.RegisterRequest;
+import did_career_certification.verifier.dto.TokenResponse;
+import did_career_certification.verifier.service.VerifierService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Component("HolderAuthController")
+@Component("VerifierAuthController")
 public class AuthController {
 
-    private final HolderService holderService;
+    private final VerifierService verifierService;
 
-    @PostMapping("/holder/register")
+    @PostMapping("/verifier/register")
     public ResponseEntity<Void> registerHolder(@Valid @RequestBody RegisterRequest request) {
-        holderService.register(request);
+        verifierService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/holder/login")
+    @PostMapping("/verifier/login")
     public ResponseEntity<TokenResponse> loginHolder(@Valid @RequestBody LoginRequest request) {
-        TokenResponse response = holderService.login(request);
+        TokenResponse response = verifierService.login(request);
         return ResponseEntity.status(HttpStatus.OK)
             .body(response);
     }

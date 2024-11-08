@@ -1,5 +1,7 @@
 package did_career_certification.verifier.dto;
 
-public record VCValidateResponse(Long id) {
+import java.util.List;
+
+public record VCValidateResponse(List<Long> id) {
 
 }

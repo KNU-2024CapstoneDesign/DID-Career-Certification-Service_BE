@@ -6,10 +6,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "HolderVerifier")
 @Getter
+@Table(name = "HOLDER_VERIFIER_TB")
 public class Verifier {
 
     @Id
