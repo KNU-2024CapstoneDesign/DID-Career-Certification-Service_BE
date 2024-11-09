@@ -9,9 +9,10 @@ import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.holder.dto.VPRequest;
 import did_career_certification.holder.dto.VerifierResponse;
 import did_career_certification.holder.entity.Holder;
+import did_career_certification.holder.entity.Issuer;
 import did_career_certification.holder.entity.VC;
 import did_career_certification.holder.entity.Verifier;
-import did_career_certification.holder.repository.UnivRepository;
+import did_career_certification.holder.repository.IssuerRepository;
 import did_career_certification.holder.repository.VCRepository;
 import did_career_certification.holder.repository.VerifierRepository;
 import did_career_certification.util.JwtUtil;
@@ -41,7 +42,7 @@ public class CredentialService {
             throw new ResponseException("not.receive.response");
         })
         .build();
-    private final UnivRepository univRepository;
+    private final IssuerRepository issuerRepository;
     private final JwtUtil jwtUtil;
     private final VerifierRepository verifierRepository;
 
@@ -64,12 +65,14 @@ public class CredentialService {
         Map<String, Object> body = new HashMap<>();
         body.put("holderDid", request.holderDid());
         body.put("name", holderName);
-        body.put("stdId", request.stdId());
+        body.put("requireData", request.requireData());
         return body;
     }
 
     public IssuerResponse findAllIssuer() {
-        return new IssuerResponse(univRepository.findAll());
+        return new IssuerResponse(issuerRepository.findAll().stream()
+            .map(Issuer::toDto)
+            .toList());
     }
 
     public List<MyVCResponse> getMyVc(String walletAddress) {
@@ -78,7 +81,8 @@ public class CredentialService {
         List<MyVCResponse> response = new ArrayList<>();
         for(VC vc: vcList) {
             Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
-            String issuerName = univRepository.findByDid(decodeVCToken.get("issuerDid").toString())
+            System.out.println(decodeVCToken.get("issuerDid"));
+            String issuerName = issuerRepository.findByDid(decodeVCToken.get("issuerDid").toString())
                 .orElseThrow(() -> new NotFoundException("not.found.univ")).getName();
             response.add(new MyVCResponse(vc.getId(), issuerName, decodeVCToken));
         }

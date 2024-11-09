@@ -71,4 +71,11 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DIDKitException.class)
+    public ResponseEntity<String> handleDIDKitExceptions(DIDKitException e) {
+        String responseMessage = messageSource.getMessage(e.getMessage(), null,
+            Locale.getDefault());
+        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+    }
 }

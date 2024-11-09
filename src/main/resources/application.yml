@@ -26,7 +26,13 @@ spring:
     init:
       mode: always
 
+  config:
+    import: application-secret.yml
+
 jwt:
   header: Authorization
   secret-key: TKwoaudc201dowoaudroQkrclspwlsWKfhdpdldkdlwhaQKfflgofkgwehewrheherherhsfhsdgalwlpwqpfwkqkpfpqfqkpqwetrwejktj
   expiration-time: 1800000 # 1000(ms) * 60(s) * 30(m) = 30분
+
+infura:
+  API_URL: https://sepolia.infura.io/v3/2c9b665e585f4b2087c04e9c3b5d2ccb

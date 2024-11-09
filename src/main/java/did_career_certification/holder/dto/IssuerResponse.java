@@ -1,8 +1,8 @@
 package did_career_certification.holder.dto;
 
-import did_career_certification.holder.entity.Univ;
 import java.util.List;
+import java.util.Map;
 
-public record IssuerResponse(List<Univ> issuerList) {
+public record IssuerResponse(List<Map<String, Object>> issuer) {
 
 }
