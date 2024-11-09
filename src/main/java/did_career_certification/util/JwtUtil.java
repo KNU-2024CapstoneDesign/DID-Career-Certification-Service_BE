@@ -65,8 +65,8 @@ public class JwtUtil {
         return Jwts.parser()
             .setSigningKey(secretKey)
             .build()
-            .parseClaimsJws(token)
-            .getBody();
+            .parseSignedClaims(token)
+            .getPayload();
     }
 
     private boolean isTokenExpired(Date expiration) {
@@ -78,7 +78,7 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
         claims.put("issuer", vc.issuerDid());
-        claims.put("issued", new Date());
+        claims.put("issued", new Date().toString());
         claims.put("credentialSubject", Map.of(
             "id", vc.holderDid(),
             "name", vc.subject().name(),
@@ -90,9 +90,9 @@ public class JwtUtil {
 
         // JWT 생성 및 서명
         return Jwts.builder()
-            .setClaims(claims)                       // 클레임 데이터 설정
-            .setIssuer(vc.issuerDid())      // Issuer DID 설정
-            .setIssuedAt(new Date())                 // 발급 일자
+            .claims(claims)
+            .issuer(vc.issuerDid())
+            .issuedAt(new Date())                 // 발급 일자
             .signWith(SignatureAlgorithm.HS256, secretKey) // HMAC 서명
             .compact();                              // JWT 생성
     }
@@ -103,14 +103,14 @@ public class JwtUtil {
             Jws<Claims> claimsJws = Jwts.parser()
                 .setSigningKey(secretKey)
                 .build()
-                .parseClaimsJws(vcToken);
-            Claims claims = claimsJws.getBody();
+                .parseSignedClaims(vcToken);
+            Claims claims = claimsJws.getPayload();
 
             // 클레임 데이터 추출
             Map<String, Object> vcSubject = new HashMap<>();
-            vcSubject.put("issuerDid", claims.get("issuer", String.class));
-            vcSubject.put("issued", claims.get("issued", Date.class));
-            vcSubject.put("credentialSubject", claims.get("credentialSubject", Map.class));
+            vcSubject.put("issuerDid", claims.get("issuer"));
+            vcSubject.put("issued", claims.get("issued"));
+            vcSubject.put("credentialSubject", claims.get("credentialSubject"));
 
             // Return the result map
             return vcSubject;

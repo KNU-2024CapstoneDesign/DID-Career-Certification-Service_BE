@@ -81,42 +81,18 @@ public class CredentialService {
         List<MyVCResponse> response = new ArrayList<>();
         for(VC vc: vcList) {
             Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
-            System.out.println(decodeVCToken.get("issuerDid"));
             String issuerName = issuerRepository.findByDid(decodeVCToken.get("issuerDid").toString())
                 .orElseThrow(() -> new NotFoundException("not.found.univ")).getName();
-            response.add(new MyVCResponse(vc.getId(), issuerName, decodeVCToken));
+            response.add(new MyVCResponse(vc.getId(), issuerName,
+                (String) decodeVCToken.get("issued"),
+                (Map<String, String>) decodeVCToken.get("credentialSubject")));
+        }
+        for(MyVCResponse sub: response) {
+            System.out.println(sub.id());
+            System.out.println(sub.issuerName());
+            System.out.println(sub.credentialSubject().toString());
         }
         return response;
-    }
-
-    public void submitVP(String walletAddress, VPRequest request) {
-        Verifier verifier = verifierRepository.findById(request.verifierId())
-            .orElseThrow(() -> new NotFoundException("not.found.verifier"));
-        Holder holder = holderService.findByWalletAddress(walletAddress);
-        List<Map<String, Object>> vcList = new ArrayList<>();
-        for(Long vcId: request.vcIds()) {
-             vcList.add(jwtUtil.decodeVCToken(vcRepository.findById(vcId).orElseThrow()
-                .getVcToken()));
-        }
-        var url = "http://localhost:8080/api/verifier/vp";
-        final var body = createVP(holder.getWalletAddress(), vcList);
-        client.post()
-            .uri(URI.create(url))
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(body)
-            .retrieve()
-            .body(Map.class);
-    }
-
-    private Map<String, Object> createVP(String holderDid, List<Map<String, Object>> vcList) {
-        Map<String, Object> proof = new HashMap<>();
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
-        payload.put("type", new String[]{"VerifiablePresentation"});
-        payload.put("holder", holderDid);
-        payload.put("verifiableCredential", vcList);
-        payload.put("proof", proof);
-        return payload;
     }
 
     public List<VerifierResponse> findAllVerifier() {

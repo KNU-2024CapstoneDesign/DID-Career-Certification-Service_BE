@@ -7,6 +7,7 @@ import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.holder.dto.VPRequest;
 import did_career_certification.holder.dto.VerifierResponse;
 import did_career_certification.holder.service.CredentialService;
+import did_career_certification.holder.service.VPService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CredentialController {
 
     private final CredentialService credentialService;
+    private final VPService vpService;
 
     @GetMapping("/issuers")
     public ResponseEntity<IssuerResponse> findAllIssuer() {
@@ -45,7 +47,7 @@ public class CredentialController {
 
     @PostMapping("/submit")
     public ResponseEntity<Void> submitVP(@Login String walletAddress, @RequestBody VPRequest request) {
-        credentialService.submitVP(walletAddress, request);
+        vpService.submitVP(walletAddress, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
