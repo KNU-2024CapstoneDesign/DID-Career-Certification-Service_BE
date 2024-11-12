@@ -36,6 +36,3 @@ jwt:
 
 ganache:
   RPC_URL: http://127.0.0.1:7545
-
-blockchain:
-  contract-address: 0xF9D9D93261ca7dAffcb24E3B6D3D8f72E07c0f74

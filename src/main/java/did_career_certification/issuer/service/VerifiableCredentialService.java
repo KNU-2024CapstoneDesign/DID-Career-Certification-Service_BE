@@ -1,7 +1,6 @@
 package did_career_certification.issuer.service;
 
 import did_career_certification.global.DIDService;
-import did_career_certification.global.IPFSService;
 import did_career_certification.issuer.dto.VC;
 import did_career_certification.issuer.dto.VCRequest;
 import did_career_certification.issuer.dto.VCResponse;
@@ -18,9 +17,8 @@ public class VerifiableCredentialService {
     private final StudentService studentService;
     private final JwtUtil jwtUtil;
     private final DIDService didService;
-    private final IPFSService ipfsService;
 
-    private final String ISSUER_DID_ADDRESS = "did:ether:0x6bB28a619f715461281e8bF999B9d5Cace151333";
+    private final String ISSUER_DID_ADDRESS = "did:ether:0x5691732720bE9d2BEa541Ad3b2A1BCa674EDE2C8";
 
     /**
      * VC 발급 로직
@@ -40,11 +38,8 @@ public class VerifiableCredentialService {
         // 4. 증명서 암호화
         String token = jwtUtil.encryptCertificate(certificate);
 
-        // 5. IPFS 저장
-        String ipfsHash = ipfsService.saveCertificate(token);
-
         // 6. IPFS 저장소 해시값 블록체인에 저장
-        didService.storeDID(ISSUER_DID_ADDRESS, ipfsHash);
+        String documentId = didService.storeDID(ISSUER_DID_ADDRESS, token);
 
         // 7. VC 생성 (Issuer DID와 Holder DID, 암호화된 증명서)
         VC vc = new VC(request.holderDid(), ISSUER_DID_ADDRESS, token);
