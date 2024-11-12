@@ -73,20 +73,20 @@ public class JwtUtil {
         return expiration.before(new Date());
     }
 
+    public String encryptCertificate(Map<String, String> subject) {
+        return Jwts.builder()
+            .claims(subject)               // 발급 일자
+            .signWith(SignatureAlgorithm.HS256, secretKey) // HMAC 서명
+            .compact();
+    }
+
     public String generateVCToken(VC vc) {
         // VC의 클레임 데이터 생성
         Map<String, Object> claims = new HashMap<>();
         claims.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
         claims.put("issuer", vc.issuerDid());
         claims.put("issued", new Date().toString());
-        claims.put("credentialSubject", Map.of(
-            "id", vc.holderDid(),
-            "name", vc.subject().name(),
-            "college", vc.subject().college().name(),
-            "major", vc.subject().major().name(),
-            "degree", vc.subject().degree().name(),
-            "academicStatus", vc.subject().academicStatus()
-        ));
+        claims.put("certificateToken", vc.certificateToken());
 
         // JWT 생성 및 서명
         return Jwts.builder()

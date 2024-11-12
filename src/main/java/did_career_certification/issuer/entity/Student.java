@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,4 +42,13 @@ public class Student {
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private AcademicStatus academicStatus;
+
+    public Map<String, String> createCertificate() {
+        Map<String, String> certificate = new HashMap<>();
+        certificate.put("studentId", String.valueOf(id));
+        certificate.put("name", name);
+        certificate.put("course", college + " " + major);
+        certificate.put("academicStatus", String.valueOf(academicStatus));
+        return certificate;
+    }
 }

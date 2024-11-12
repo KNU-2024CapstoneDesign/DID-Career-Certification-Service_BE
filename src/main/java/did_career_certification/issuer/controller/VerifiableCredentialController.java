@@ -19,7 +19,7 @@ public class VerifiableCredentialController {
     private final VerifiableCredentialService verifiableCredentialService;
 
     @PostMapping
-    public ResponseEntity<VCResponse> issueVC(@RequestBody VCRequest request) {
+    public ResponseEntity<VCResponse> issueVC(@RequestBody VCRequest request) throws Exception {
         return ResponseEntity.status(HttpStatus.OK)
             .body(verifiableCredentialService.issueVC(request));
     }

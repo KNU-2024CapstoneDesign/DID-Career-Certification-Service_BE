@@ -34,5 +34,8 @@ jwt:
   secret-key: TKwoaudc201dowoaudroQkrclspwlsWKfhdpdldkdlwhaQKfflgofkgwehewrheherherhsfhsdgalwlpwqpfwkqkpfpqfqkpqwetrwejktj
   expiration-time: 1800000 # 1000(ms) * 60(s) * 30(m) = 30분
 
-infura:
-  API_URL: https://sepolia.infura.io/v3/2c9b665e585f4b2087c04e9c3b5d2ccb
+ganache:
+  RPC_URL: http://127.0.0.1:7545
+
+blockchain:
+  contract-address: 0xF9D9D93261ca7dAffcb24E3B6D3D8f72E07c0f74

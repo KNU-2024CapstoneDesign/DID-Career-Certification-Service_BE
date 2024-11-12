@@ -6,7 +6,6 @@ import did_career_certification.exception.ResponseException;
 import did_career_certification.holder.dto.CredentialRequest;
 import did_career_certification.holder.dto.IssuerResponse;
 import did_career_certification.holder.dto.MyVCResponse;
-import did_career_certification.holder.dto.VPRequest;
 import did_career_certification.holder.dto.VerifierResponse;
 import did_career_certification.holder.entity.Holder;
 import did_career_certification.holder.entity.Issuer;
