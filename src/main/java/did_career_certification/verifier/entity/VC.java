@@ -1,6 +1,5 @@
 package did_career_certification.verifier.entity;
 
-import did_career_certification.util.JwtUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,9 +31,5 @@ public class VC {
     public VC(VP vp, String vcToken) {
         this.vp = vp;
         this.vcToken = vcToken;
-    }
-
-    public Map<String, String> parseVC(JwtUtil jwtUtil) {
-        return (Map<String, String>) jwtUtil.decodeVCToken(vcToken).get("credentialSubject");
     }
 }

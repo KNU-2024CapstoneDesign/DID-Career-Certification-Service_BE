@@ -39,10 +39,10 @@ public class VerifiableCredentialService {
         String token = jwtUtil.encryptCertificate(certificate);
 
         // 6. IPFS 저장소 해시값 블록체인에 저장
-        String documentId = didService.storeDID(ISSUER_DID_ADDRESS, token);
+        String txHash = didService.storeDID(ISSUER_DID_ADDRESS, token);
 
         // 7. VC 생성 (Issuer DID와 Holder DID, 암호화된 증명서)
-        VC vc = new VC(request.holderDid(), ISSUER_DID_ADDRESS, token);
+        VC vc = new VC(request.holderDid(), ISSUER_DID_ADDRESS, token, txHash);
 
         // 8. JWT 토큰을 사용하여 VC 암호화
         String vcToken = jwtUtil.generateVCToken(vc);

@@ -79,17 +79,13 @@ public class CredentialService {
         List<VC> vcList = vcRepository.findAllByHolder(holder);
         List<MyVCResponse> response = new ArrayList<>();
         for(VC vc: vcList) {
-            Map<String, Object> decodeVCToken = jwtUtil.decodeVCToken(vc.getVcToken());
-            String issuerName = issuerRepository.findByDid(decodeVCToken.get("issuerDid").toString())
-                .orElseThrow(() -> new NotFoundException("not.found.univ")).getName();
-            response.add(new MyVCResponse(vc.getId(), issuerName,
-                (String) decodeVCToken.get("issued"),
-                (Map<String, String>) decodeVCToken.get("credentialSubject")));
-        }
-        for(MyVCResponse sub: response) {
-            System.out.println(sub.id());
-            System.out.println(sub.issuerName());
-            System.out.println(sub.credentialSubject().toString());
+            Map<String, String> tempVC = jwtUtil.decodeVCToken(vc.getVcToken());
+            response.add(new MyVCResponse(
+                vc.getId(),
+                tempVC.get("issuerName"),
+                tempVC.get("issuanceDate"),
+                jwtUtil.decodeCertificateToken(tempVC.get("certificateKeySet"), tempVC.get("certificateToken"))
+            ));
         }
         return response;
     }

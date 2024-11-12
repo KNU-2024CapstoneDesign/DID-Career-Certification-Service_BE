@@ -1,6 +1,7 @@
 package did_career_certification.util;
 
 import did_career_certification.exception.InvalidTokenException;
+import did_career_certification.holder.dto.MyVCResponse;
 import did_career_certification.issuer.dto.VC;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,10 +85,12 @@ public class JwtUtil {
     public String generateVCToken(VC vc) {
         // VC의 클레임 데이터 생성
         Map<String, Object> claims = new HashMap<>();
-        claims.put("@context", new String[]{"https://www.w3.org/2018/credentials/v1"});
-        claims.put("issuer", vc.issuerDid());
-        claims.put("issued", new Date().toString());
+        claims.put("issuerName", "강원대학교(춘천)");
+        claims.put("issuanceDate", new Date().toString());
         claims.put("certificateToken", vc.certificateToken());
+        claims.put("certificateKeySet", "studentId,name,course,academicStatus");
+        claims.put("issuerDid", vc.issuerDid());
+        claims.put("txHash", vc.txHash());
 
         // JWT 생성 및 서명
         return Jwts.builder()
@@ -97,7 +101,7 @@ public class JwtUtil {
             .compact();                              // JWT 생성
     }
 
-    public Map<String, Object> decodeVCToken(String vcToken) {
+    public Map<String, String> decodeVCToken(String vcToken) {
         try {
             // JWT 토큰을 파싱하고 서명 검증
             Jws<Claims> claimsJws = Jwts.parser()
@@ -106,15 +110,39 @@ public class JwtUtil {
                 .parseSignedClaims(vcToken);
             Claims claims = claimsJws.getPayload();
 
+            Map<String, String> vc = new HashMap<>();
+            vc.put("issuerName", (String) claims.get("issuerName"));
+            vc.put("issuanceDate", (String) claims.get("issuanceDate"));
+            vc.put("certificateToken", (String) claims.get("certificateToken"));
+            vc.put("certificateKeySet", (String) claims.get("certificateKeySet"));
+
             // 클레임 데이터 추출
-            Map<String, Object> vcSubject = new HashMap<>();
-            vcSubject.put("issuerDid", claims.get("issuer"));
-            vcSubject.put("issued", claims.get("issued"));
-            vcSubject.put("credentialSubject", claims.get("credentialSubject"));
+            return vc;
+        } catch (SignatureException e) {
+            // 서명 검증에 실패한 경우 예외 처리
+            throw new IllegalArgumentException("Invalid JWT signature");
+        } catch (Exception e) {
+            // 기타 예외 처리
+            throw new IllegalArgumentException("Error decoding JWT token", e);
+        }
+    }
 
-            // Return the result map
-            return vcSubject;
+    public Map<String, String> decodeCertificateToken(String certificateKeySet, String certificateToken) {
+        try {
+            // JWT 토큰을 파싱하고 서명 검증
+            Jws<Claims> claimsJws = Jwts.parser()
+                .setSigningKey(secretKey)
+                .build()
+                .parseSignedClaims(certificateToken);
+            Claims claims = claimsJws.getPayload();
 
+            Map<String, String> subject = new HashMap<>();
+            for(String key: certificateKeySet.split(",")) {
+                subject.put(key, (String) claims.get(key));
+            }
+
+            // 클레임 데이터 추출
+            return subject;
         } catch (SignatureException e) {
             // 서명 검증에 실패한 경우 예외 처리
             throw new IllegalArgumentException("Invalid JWT signature");

@@ -1,10 +1,8 @@
 package did_career_certification.verifier.entity;
 
 import did_career_certification.holder.dto.MyVCResponse;
-import did_career_certification.issuer.dto.VCResponse;
 import did_career_certification.util.JwtUtil;
 import did_career_certification.verifier.dto.VPResponse;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -51,11 +49,16 @@ public class VP {
 
     public VPResponse toDto(List<VC> vcTokenList, JwtUtil jwtUtil) {
         List<MyVCResponse> vcList = new ArrayList<>();
-        for(VC vc: vcTokenList) {
-            Map<String, Object> subject = jwtUtil.decodeVCToken(vc.getVcToken());
-            vcList.add(new MyVCResponse(vc.getId(), (String) subject.get("issuerDid"),
-                (String) subject.get("issued"),
-                (Map<String, String>) subject.get("credentialSubject")));
+        int i = 0;
+        for(VC token: vcTokenList) {
+            Map<String, String> vc = jwtUtil.decodeVCToken(token.getVcToken());
+            vcList.add(new MyVCResponse(
+                (long) ++i,
+                vc.get("issuerName"),
+                vc.get("issueDate"),
+                jwtUtil.decodeCertificateToken(vc.get("certificateKeySet"), vc.get("certificateToken"))
+            ));
+
         }
         return new VPResponse(id, holderName, vcList);
     }
