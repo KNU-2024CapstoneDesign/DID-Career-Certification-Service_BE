@@ -10,7 +10,7 @@ import org.web3j.protocol.http.HttpService;
 @Configuration
 public class Web3jConfig {
 
-    public static final String CONTRACT_ADDRESS = "0x422341f1a0a85e6b2259fe93c3e0c8c2c6abd001";
+    public static final String CONTRACT_ADDRESS = "0x3aA5F44bbAB8C574C426B4eBEBdb9fA123875b27";
 
     @Bean
     public Web3j web3j() {

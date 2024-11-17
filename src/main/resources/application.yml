@@ -33,6 +33,7 @@ jwt:
   header: Authorization
   secret-key: TKwoaudc201dowoaudroQkrclspwlsWKfhdpdldkdlwhaQKfflgofkgwehewrheherherhsfhsdgalwlpwqpfwkqkpfpqfqkpqwetrwejktj
   expiration-time: 1800000 # 1000(ms) * 60(s) * 30(m) = 30분
+  certificate-expiration-time: 2592000000 # 1000(ms) * 60(s) * 60(m) * 24(h) * 30(d) = 1달(=30일)
 
 ganache:
   RPC_URL: http://127.0.0.1:7545

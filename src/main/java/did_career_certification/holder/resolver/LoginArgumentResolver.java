@@ -1,12 +1,12 @@
 package did_career_certification.holder.resolver;
 
-import static did_career_certification.util.JwtUtil.AUTHORIZATION_HEADER;
-import static did_career_certification.util.JwtUtil.BEARER_PREFIX;
-import static did_career_certification.util.JwtUtil.BEARER_PREFIX_LENGTH;
+import static did_career_certification.jwt.JwtUtil.AUTHORIZATION_HEADER;
+import static did_career_certification.jwt.JwtUtil.BEARER_PREFIX;
+import static did_career_certification.jwt.JwtUtil.BEARER_PREFIX_LENGTH;
 
 import did_career_certification.exception.PermissionException;
 import did_career_certification.holder.annotation.Login;
-import did_career_certification.util.JwtUtil;
+import did_career_certification.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package did_career_certification.issuer.entity;
 
+import did_career_certification.global.dto.KangwonUnivCertificate;
 import did_career_certification.issuer.enums.AcademicStatus;
 import did_career_certification.issuer.enums.College;
 import did_career_certification.issuer.enums.Degree;
@@ -43,12 +44,13 @@ public class Student {
     @Column(nullable = false)
     private AcademicStatus academicStatus;
 
-    public Map<String, String> createCertificate() {
-        Map<String, String> certificate = new HashMap<>();
-        certificate.put("studentId", String.valueOf(id));
-        certificate.put("name", name);
-        certificate.put("course", college + " " + major);
-        certificate.put("academicStatus", String.valueOf(academicStatus));
-        return certificate;
+    public KangwonUnivCertificate createCertificate(String holderDid) {
+        return new KangwonUnivCertificate(
+            holderDid,
+            id,
+            name,
+            college + " " + major,
+            academicStatus.toString()
+        );
     }
 }

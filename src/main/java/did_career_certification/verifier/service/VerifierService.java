@@ -8,7 +8,7 @@ import did_career_certification.verifier.dto.RegisterRequest;
 import did_career_certification.verifier.dto.TokenResponse;
 import did_career_certification.verifier.entity.Verifier;
 import did_career_certification.verifier.repository.VerifierRepository;
-import did_career_certification.util.JwtUtil;
+import did_career_certification.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

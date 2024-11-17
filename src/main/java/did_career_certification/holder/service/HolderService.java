@@ -8,7 +8,7 @@ import did_career_certification.exception.DuplicateException;
 import did_career_certification.exception.NotFoundException;
 import did_career_certification.exception.PermissionException;
 import did_career_certification.holder.repository.HolderRepository;
-import did_career_certification.util.JwtUtil;
+import did_career_certification.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

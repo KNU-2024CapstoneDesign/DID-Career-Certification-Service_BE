@@ -1,8 +1,8 @@
 package did_career_certification.issuer.controller;
 
+import did_career_certification.global.dto.VC;
 import did_career_certification.issuer.dto.VCRequest;
-import did_career_certification.issuer.dto.VCResponse;
-import did_career_certification.issuer.service.VerifiableCredentialService;
+import did_career_certification.issuer.service.KangwonUnivService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class VerifiableCredentialController {
 
-    private final VerifiableCredentialService verifiableCredentialService;
+    private final KangwonUnivService kangwonUnivService;
 
     @PostMapping
-    public ResponseEntity<VCResponse> issueVC(@RequestBody VCRequest request) throws Exception {
+    public ResponseEntity<VC> issueVC(@RequestBody VCRequest request) throws Exception {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(verifiableCredentialService.issueVC(request));
+            .body(kangwonUnivService.issueVC(request));
     }
 }

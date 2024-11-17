@@ -3,77 +3,53 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "_subject",
 				"type": "string"
 			}
 		],
-		"name": "didDocuments",
+		"name": "setCertificate",
 		"outputs": [
 			{
-				"internalType": "string",
-				"name": "subjectToken",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "txHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "getDIDDocumentByTxHash",
-		"outputs": [
-			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "did",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "subjectToken",
-				"type": "string"
-			}
-		],
-		"name": "storeDIDDocument",
-		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
 			}
 		],
-		"name": "txHashToDID",
+		"name": "getCertificate",
 		"outputs": [
 			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCertificateCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
