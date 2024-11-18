@@ -29,6 +29,6 @@ public class Holder {
         this.password = password;
         this.name = name;
         this.profileImageUrl = Objects.requireNonNullElse(profileImageUrl,
-            "src/main/resources/static/images/곰두리.png");
+            "https://github.com/KNU-2024CapstoneDesign/UoT_BE/blob/Develop/src/main/resources/static/images/%EA%B3%B0%EB%91%90%EB%A6%AC.png?raw=true");
     }
 }
