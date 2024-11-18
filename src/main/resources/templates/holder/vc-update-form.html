@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>VC 정보 변경 페이지</title>
+  <!-- 부트스트랩 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 커스텀 CSS -->
+  <link href="/css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+  <div class="container">
+    <a href="/admin/holder/vc" class="btn btn-link">&larr; VC 관리 페이지로 돌아가기</a>
+  <h2 class="mb-4">VC 정보 변경</h2>
+  <form th:action="@{/admin/holder/vc/{vcId}(vcId=${vc.id})}" th:object="${vc}" method="post" class="needs-validation" novalidate>
+    <input type="hidden" name="_method" value="put" />
+    <table class="table">
+      <tr>
+        <td>Issuer name:</td>
+        <td>
+          <label>
+            <input type="text" id="issuerName" th:field="*{issuerName}" required />
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>Course:</td>
+        <td>
+          <label>
+            <input type="text" name="course" th:field="*{course}" required />
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>Academic status:</td>
+        <td>
+          <label>
+            <select name="Status" th:field="*{academicStatus}" class="form-select" required>
+              <option th:each="status : ${academicStatus}" th:value="${status}" th:text="${status}"></option>
+            </select>
+          </label>
+          <div th:if="${#fields.hasErrors('academicStatus')}" th:errors="*{academicStatus}" class="text-danger">제적 상태를 선택해주세요</div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- 등록 버튼을 표 밖으로 이동 -->
+    <button type="submit" class="btn btn-primary w-100 mt-3">변경</button>
+  </form>
+</div>
+
+<!-- 부트스트랩 및 팝퍼 JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

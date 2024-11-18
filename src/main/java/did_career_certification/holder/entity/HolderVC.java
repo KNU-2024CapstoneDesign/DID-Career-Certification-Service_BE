@@ -1,6 +1,8 @@
 package did_career_certification.holder.entity;
 
 import did_career_certification.holder.dto.MyVCResponse;
+import did_career_certification.holder.dto.UpdateVCResponse;
+import did_career_certification.jwt.CertificateJwt;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,12 +13,14 @@ import jakarta.persistence.ManyToOne;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class HolderVC {
 
     @Id
@@ -62,6 +66,16 @@ public class HolderVC {
             issuanceDate,
             expirationDate,
             certificate
+        );
+    }
+
+    public UpdateVCResponse toUpdateDto(CertificateJwt jwt) {
+        Map<String, String> parseToken = jwt.parseUnivTokenToMap(certificateToken);
+        return new UpdateVCResponse(
+            id,
+            issuerName,
+            parseToken.get("course"),
+            parseToken.get("academicStatus")
         );
     }
 }
