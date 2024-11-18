@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,14 +23,21 @@ public class Applicant {
     private String holderName;
 
     @Column(nullable = false)
-    private String holderDid;
+    private String holderAccount;
 
-    public Applicant (String holderName, String holderDid) {
+    private String profileImageUrl;
+
+    private LocalDateTime submitTime;
+
+    public Applicant(String holderName, String holderAccount, String profileImageUrl,
+        LocalDateTime submitTime) {
         this.holderName = holderName;
-        this.holderDid = holderDid;
+        this.holderAccount = holderAccount;
+        this.profileImageUrl = profileImageUrl;
+        this.submitTime = submitTime;
     }
 
     public ApplicantResponse toDto() {
-        return new ApplicantResponse(id, holderName);
+        return new ApplicantResponse(id, holderName, profileImageUrl, submitTime);
     }
 }

@@ -7,6 +7,6 @@ public record RegisterRequest(@NotBlank String walletAddress, @NotBlank String p
                               @NotBlank String name) {
 
     public Holder toEntity(String encodedPassword) {
-        return new Holder(walletAddress, encodedPassword, name);
+        return new Holder(walletAddress, encodedPassword, name, null);
     }
 }

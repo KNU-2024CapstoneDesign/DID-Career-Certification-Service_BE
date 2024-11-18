@@ -1,5 +1,7 @@
 package did_career_certification.verifier.dto;
 
-public record ApplicantResponse(Long id, String name) {
+import java.time.LocalDateTime;
+
+public record ApplicantResponse(Long id, String name, String profileImageUrl, LocalDateTime submitTime) {
 
 }

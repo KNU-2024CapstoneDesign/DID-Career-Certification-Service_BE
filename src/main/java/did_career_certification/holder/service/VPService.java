@@ -12,6 +12,7 @@ import did_career_certification.holder.entity.Verifier;
 import did_career_certification.holder.repository.HolderVCRepository;
 import did_career_certification.holder.repository.VerifierRepository;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,11 @@ public class VPService {
 
     private VP createVP(String walletAddress, List<Long> vcIds) {
         Holder holder = holderService.findByWalletAddress(walletAddress);
-        String holderDid = "did:ethr:" + walletAddress;
         return new VP(
             holder.getName(),
-            holderDid,
+            walletAddress,
+            holder.getProfileImageUrl(),
+            LocalDateTime.now(),
             createVCList(vcIds)
         );
     }
