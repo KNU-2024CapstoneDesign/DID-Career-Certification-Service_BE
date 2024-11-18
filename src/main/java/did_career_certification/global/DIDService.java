@@ -38,10 +38,12 @@ public class DIDService {
      */
     public BigInteger storeCertificate(String certificate) throws Exception {
         try {
+            System.out.println("certificate is " + certificate);
             // 계약 로드
             DIDRegistry contract = loadContract();
             // certificate 저장하고, 반환된 ID
             TransactionReceipt receipt = contract.setCertificate(certificate).send();
+            System.out.println("receipt: " + receipt);
             // Solidity에서 반환된 인증서 ID
             BigInteger certificateId = contract.getCertificateCount().send();
 

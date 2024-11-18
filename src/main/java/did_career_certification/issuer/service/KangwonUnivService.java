@@ -18,7 +18,7 @@ public class KangwonUnivService {
     private final StudentService studentService;
     private final DIDService didService;
 
-    private final String ISSUER_ACCOUNT = "0x5691732720bE9d2BEa541Ad3b2A1BCa674EDE2C8";
+    private final String ISSUER_ACCOUNT = "0x653D13207B1b3FdFB85f843FF3e7bfFC9BbC22D7";
     private final CertificateJwt certificateJwt;
     private final static String KANGWON_UNIV_CHUNCHON = "강원대학교(춘천)";
 
