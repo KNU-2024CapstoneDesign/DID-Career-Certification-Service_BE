@@ -52,10 +52,7 @@
 <!-- 시연 영상 -->
 <h2>🎥 시연 영상</h2>
 <div id="시연-영상" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0;">
-  <video controls width=100%>
-    <source src="https://github.com/KNU-2024CapstoneDesign/UoT_BE/blob/Develop/src/main/resources/static/video/UoT_%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+  <p>시연 영상은 <a href="https://youtu.be/Nw3Nx9_LwFg?si=5BqvKUKKH6xAK96b">여기</a>에서 확인해볼 수 있습니다.</p>
 </div>
 
 <!-- 멤버 소개 -->
