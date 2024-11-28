@@ -53,7 +53,7 @@
 <h2>🎥 시연 영상</h2>
 <div id="시연-영상" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0;">
   <video controls width=100%>
-    <source src="src/main/resources/static/video/UoT_시연영상.mp4" type="video/mp4" />
+    <source src="https://github.com/KNU-2024CapstoneDesign/UoT_BE/blob/Develop/src/main/resources/static/video/UoT_%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 </div>
