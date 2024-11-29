@@ -58,32 +58,32 @@
 <!-- 멤버 소개 -->
 <h2>👩‍💻 멤버 소개</h2>
 <div id="멤버-소개" style="border: 3px solid #ddd; border-radius: 20px; padding: 30px; margin: 30px 0;">
-  <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+  <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: center;">
     <tr>
-      <th style="text-align: center;">
+      <th>
         <a href="https://github.com/chris0825">고승현</a>
       </th>
-      <th style="text-align: center;">
+      <th>
         <a href="https://github.com/DongunKim1125">김동언</a>
       </th>
-      <th style="text-align: center;">
+      <th>
         <a href="https://github.com/rainyday1367">정동한</a>
       </th>
     </tr>
     <tr>
-      <td style="text-align: center; vertical-align: middle;"><img src="https://avatars.githubusercontent.com/u/62418972?v=4" alt="고승현" /></td>
-      <td style="text-align: center; vertical-align: middle;"><img src="https://avatars.githubusercontent.com/u/85996392?v=4" alt="김동언" /></td>
-      <td style="text-align: center; vertical-align: middle;"><img src="https://avatars.githubusercontent.com/u/98398484?v=4" alt="정동한" /></td>
+      <td><img src="https://avatars.githubusercontent.com/u/62418972?v=4" alt="고승현" /></td>
+      <td><img src="https://avatars.githubusercontent.com/u/85996392?v=4" alt="김동언" /></td>
+      <td><img src="https://avatars.githubusercontent.com/u/98398484?v=4" alt="정동한" /></td>
     </tr>
     <tr>
-      <td style="text-align: center; vertical-align: middle;">FullStack</td>
-      <td style="text-align: center; vertical-align: middle;">FrontEnd</td>
-      <td style="text-align: center; vertical-align: middle;">BlockChain</td>
+      <td>FullStack</td>
+      <td>FrontEnd</td>
+      <td>BlockChain</td>
     </tr>
     <tr>
-      <td style="text-align: center; vertical-align: middle;">Tech leader</td>
-      <td style="text-align: center; vertical-align: middle;">Designer</td>
-      <td style="text-align: center; vertical-align: middle;">Team leader</td>
+      <td>Tech leader</td>
+      <td>Designer</td>
+      <td>Team leader</td>
     </tr>
   </table>
 </div>
