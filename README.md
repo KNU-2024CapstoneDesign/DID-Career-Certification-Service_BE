@@ -60,9 +60,15 @@
 <div id="멤버-소개" style="border: 3px solid #ddd; border-radius: 20px; padding: 30px; margin: 30px 0;">
   <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
     <tr>
-      <th style="text-align: center; vertical-align: middle;">고승현</th>
-      <th style="text-align: center; vertical-align: middle;">김동언</th>
-      <th style="text-align: center; vertical-align: middle;">정동한</th>
+      <th style="text-align: center;">
+        <a href="https://github.com/chris0825">고승현</a>
+      </th>
+      <th style="text-align: center;">
+        <a href="https://github.com/DongunKim1125">김동언</a>
+      </th>
+      <th style="text-align: center;">
+        <a href="https://github.com/rainyday1367">정동한</a>
+      </th>
     </tr>
     <tr>
       <td style="text-align: center; vertical-align: middle;"><img src="https://avatars.githubusercontent.com/u/62418972?v=4" alt="고승현" /></td>
@@ -78,17 +84,6 @@
       <td style="text-align: center; vertical-align: middle;">Tech leader</td>
       <td style="text-align: center; vertical-align: middle;">Designer</td>
       <td style="text-align: center; vertical-align: middle;">Team leader</td>
-    </tr>
-    <tr>
-      <td style="text-align: center; vertical-align: middle;">
-        <a href="https://github.com/seorinnn">Github</a>
-      </td>
-      <td style="text-align: center; vertical-align: middle;">
-        <a href="https://github.com/seorinnn">Github</a>
-      </td>
-      <td style="text-align: center; vertical-align: middle;">
-        <a href="https://github.com/seorinnn">Github</a>
-      </td>
     </tr>
   </table>
 </div>
